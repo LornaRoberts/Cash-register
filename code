@@ -1,0 +1,162 @@
+function checkCashRegister(price, cash, cid) {
+
+  let giveChange = cash - price;
+  giveChange *= 1;
+
+
+  let cashInDrawer = function() {
+    let total = 0;
+    for (let i = 0; i < cid.length; i++) {
+      total += cid[i][1];
+    }
+    let result = total *= 1;
+    return result.toFixed(2);
+  }
+
+  let totalInDrawer = cashInDrawer();
+  totalInDrawer *= 1;
+
+  let changeGiven = [];
+
+  let register = {
+    status: "",
+    change: []
+  };
+
+  let moneyInDrawer = cid.reverse();
+
+
+  if (giveChange > totalInDrawer) {
+    register.status = "INSUFFICIENT_FUNDS";
+    register.change = [];
+  } else if (giveChange === totalInDrawer) {
+    register.status = "CLOSED";
+    register.change = cid.reverse();
+  } else {
+    for (let i = 0; i < moneyInDrawer.length; i++) {
+      while (moneyInDrawer[0][1] >= 100 && giveChange >= 100) {
+        giveChange -= 100;
+        moneyInDrawer[0][1] -= 100;
+        const index = changeGiven.map(e => e[0]).indexOf("ONE HUNDRED");
+        if (index > -1) {
+          changeGiven[index][1] += 100;
+        } else {
+          changeGiven.push(["ONE HUNDRED", 100]);
+        }
+      }
+
+      while (moneyInDrawer[1][1] >= 20 && giveChange >= 20) {
+        giveChange -= 20;
+        moneyInDrawer[1][1] -= 20;
+        const index = changeGiven.map(e => e[0]).indexOf("TWENTY");
+        if (index > -1) {
+          changeGiven[index][1] += 20;
+        } else {
+          changeGiven.push(["TWENTY", 20]);
+
+        }
+      }
+      while (moneyInDrawer[2][1] >= 10 && giveChange >= 10) {
+        giveChange -= 10;
+        moneyInDrawer[2][1] -= 10;
+        const index = changeGiven.map(e => e[0]).indexOf("TEN");
+        if (index > -1) {
+          changeGiven[index][1] += 10;
+        } else {
+          changeGiven.push(["TEN", 10]);
+        }
+      }
+      while (moneyInDrawer[3][1] >= 5 && giveChange >= 5) {
+        giveChange -= 5;
+        moneyInDrawer[3][1] -= 5;
+        const index = changeGiven.map(e => e[0]).indexOf("FIVE");
+        if (index > -1) {
+          changeGiven[index][1] += 5;
+        } else {
+          changeGiven.push(["FIVE", 5]);
+        }
+      }
+      while (moneyInDrawer[4][1] >= 1 && giveChange >= 1) {
+        giveChange -= 1;
+        moneyInDrawer[4][1] -= 1;
+        const index = changeGiven.map(e => e[0]).indexOf("ONE");
+        if (index > -1) {
+          changeGiven[index][1] += 1;
+        } else {
+          changeGiven.push(["ONE", 1]);
+        }
+      }
+      while (moneyInDrawer[5][1] >= 0.25 && giveChange >= 0.25) {
+        giveChange -= 0.25;
+        moneyInDrawer[5][1] -= 0.25;
+        const index = changeGiven.map(e => e[0]).indexOf("QUARTER");
+        if (index > -1) {
+          changeGiven[index][1] += 0.25;
+        } else {
+          changeGiven.push(["QUARTER", 0.25]);
+        }
+      }
+      while (moneyInDrawer[6][1] >= 0.1 && giveChange >= 0.1) {
+        giveChange -= 0.1;
+        moneyInDrawer[6][1] -= 0.1;
+
+        const index = changeGiven.map(e => e[0]).indexOf("DIME");
+        if (index > -1) {
+          changeGiven[index][1] += 0.1;
+        } else {
+          changeGiven.push(["DIME", 0.1]);
+
+        }
+      }
+
+      while (moneyInDrawer[7][1] >= 0.05 && giveChange >= 0.05) {
+        giveChange.toFixed(2);
+        giveChange -= 0.05;
+        moneyInDrawer[7][1] -= 0.05;
+
+        const index = changeGiven.map(e => e[0]).indexOf("NICKEL");
+        if (index > -1) {
+          changeGiven[index][1] += 0.05;
+        } else {
+          changeGiven.push(["NICKEL", 0.05]);
+
+        }
+      }
+
+      while (moneyInDrawer[8][1] > 0 && giveChange > 0) {
+        giveChange -= 0.01;
+        console.log(giveChange)
+        moneyInDrawer[8][1] -= 0.01;
+        const index = changeGiven.map(e => e[0]).indexOf("PENNY");
+        if (index > -1) {
+          changeGiven[index][1] += 0.01;
+        } else {
+          changeGiven.push(["PENNY", 0.01]);
+
+        }
+        console.log(giveChange)
+      }
+
+    }
+    if (giveChange > 0) {
+      register.status = "INSUFFICIENT_FUNDS";
+      register.change = [];
+    } else if (giveChange <= 0) {
+      register.status = "OPEN";
+      register.change = changeGiven;
+    }
+
+  }
+  console.log(register);
+}
+checkCashRegister(3.26, 100, [
+  ["PENNY", 1.01],
+  ["NICKEL", 2.05],
+  ["DIME", 3.1],
+  ["QUARTER", 4.25],
+  ["ONE", 90],
+  ["FIVE", 55],
+  ["TEN", 20],
+  ["TWENTY", 60],
+  ["ONE HUNDRED", 100]
+])
